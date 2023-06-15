@@ -1,0 +1,74 @@
+{
+  "categories": [
+    {
+      "categorieId": 1,
+      "category": "Furniture"
+    },
+    {
+      "categorieId": 2,
+      "category": "Hand Bag"
+    },
+    {
+      "categorieId": 3,
+      "category": "Books"
+    },
+    {
+      "categorieId": 4,
+      "category": "Tech"
+    },
+    {
+      "categorieId": 5,
+      "category": "Sneakers"
+    },
+    {
+      "categorieId": 6,
+      "category": "Travel"
+    }
+  ],
+  "products": [
+    {
+      "productId": 1,
+      "productName": "Gaming Headphone",
+      "productCategory": "Tech",
+      "productSubCategory": "Audio",
+      "productPrice": 239,
+      "productDescription": "Table with air purifier, stained veneer/black",
+      "productRating": 4.5,
+      "productQuantity": 40,
+      "productColor": "red"
+    },
+    {
+      "productId": 2,
+      "productName": "Gaming Headphone",
+      "productCategory": "Tech",
+      "productSubCategory": "Audio",
+      "productPrice": 239,
+      "productDescription": "Table with air purifier, stained veneer/black",
+      "productRating": 4.5,
+      "productQuantity": 40,
+      "productColor": "red"
+    },
+    {
+      "productId": 3,
+      "productName": "Gaming Headphone",
+      "productCategory": "Tech",
+      "productSubCategory": "Audio",
+      "productPrice": 239,
+      "productDescription": "Table with air purifier, stained veneer/black",
+      "productRating": 4.5,
+      "productQuantity": 40,
+      "productColor": "red"
+    },
+    {
+      "productId": 4,
+      "productName": "Gaming Headphone",
+      "productCategory": "Tech",
+      "productSubCategory": "Audio",
+      "productPrice": 239,
+      "productDescription": "Table with air purifier, stained veneer/black",
+      "productRating": 4.5,
+      "productQuantity": 40,
+      "productColor": "red"
+    }
+  ]
+}
