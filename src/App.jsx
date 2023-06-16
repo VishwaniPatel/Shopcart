@@ -1,13 +1,13 @@
 import React from "react";
 import Master from "./core/Master";
-import Home from "./pages/Home";
+import { MantineProvider } from "@mantine/core";
+import Routing from "./routing/Routing";
 
 const App = () => {
   return (
-    <>
-      <Master />
-      <Home />
-    </>
+    <MantineProvider>
+      <Routing />
+    </MantineProvider>
   );
 };
 
