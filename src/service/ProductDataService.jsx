@@ -8,3 +8,13 @@ export const getProductData = async () => {
 export const addProductData = async (product) => {
   return await axios.post(`${baseUrl}`, product);
 };
+
+// to get categories
+export const getCategories = async () => {
+  return await axios.get(baseUrl + "categories");
+};
+
+// to get categories
+export const getSubCategories = async () => {
+  return await axios.get(baseUrl + "subcategories");
+};

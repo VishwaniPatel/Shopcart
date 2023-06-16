@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = " http://localhost:3000/";
+const baseUrl = "http://localhost:3000/";
 // to get user details
 
 export const getCustomerData = async () => {

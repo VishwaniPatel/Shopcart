@@ -1,55 +1,49 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { Formik, Form, Field } from "formik";
+import {
+  getCategories,
+  getSubCategories,
+  addProductData,
+} from "../service/ProductDataService";
 const AddProductForm = () => {
-  const [image, setImage] = useState({ preview: "", data: "" });
-  const [status, setStatus] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let formData = new FormData();
-    formData.append("file", image.data);
-    const response = await fetch("http://localhost:5000/image", {
-      method: "POST",
-      body: formData,
-    });
-    if (response) setStatus(response.statusText);
-  };
-  onFileUpload = () => {
-    // Create an object of formData
-    const formData = new FormData();
+  const [imageFile, setImageFile] = useState(null);
+  const [base64String, setBase64String] = useState("");
+  const [isImageValue, setIsImageValue] = useState(false);
 
-    // Update the formData object
-    formData.append(
-      "myFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
 
-    // Details of the uploaded file
-    console.log(this.state.selectedFile);
-
-    // Request made to the backend api
-    // Send formData object
-    axios.post("api/uploadfile", formData);
-  };
-  const handleFileChange = (e) => {
-    const img = {
-      preview: URL.createObjectURL(e.target.files[0]),
-      data: e.target.files[0],
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = String(reader.result);
+      setBase64String(base64String);
     };
-    setImage(img);
+    reader.readAsDataURL(file);
+
+    if (file) {
+      setIsImageValue(true);
+    }
   };
+  useEffect(() => {
+    console.log(base64String);
+  }, [base64String]);
   return (
-    <div className="App">
-      <h1>Upload to server</h1>
-      {image.preview && <img src={image.preview} width="100" height="100" />}
-      <hr></hr>
-      <form onSubmit={handleSubmit}>
-        <input type="file" name="file" onChange={handleFileChange}></input>
-        <button type="submit" onClick={onFileUpload}>
-          Submit
-        </button>
-      </form>
-      {status && <h4>{status}</h4>}
+    <div>
+      <h1>Upload an Image</h1>
+      <input type="file" onChange={handleImageUpload} />
+
+      {isImageValue && (
+        <div>
+          <h2>Base64 String:</h2>
+          <p>{base64String}</p>
+        </div>
+      )}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={LoginSchema}
+        onSubmit={handleSubmit}
+      ></Formik>
     </div>
   );
 };
