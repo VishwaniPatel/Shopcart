@@ -48,7 +48,7 @@ const TopCategories = () => {
       <Grid gutter="xl">
         {categories.map((data, index) => {
           return (
-            <Grid.Col span={2} key={index}>
+            <Grid.Col lg={2} md={4} key={index}>
               <ImageCard cardData={data} />
             </Grid.Col>
           );

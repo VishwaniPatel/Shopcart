@@ -5,6 +5,7 @@ import Registration from "../core/Registration";
 import Home from "../pages/Home";
 import AddProductForm from "../components/AddProductForm";
 import Master from "../core/Master";
+import ImageForm from "../components/AddImage";
 const Routing = () => {
   return (
     <Routes>
@@ -13,6 +14,7 @@ const Routing = () => {
       <Route path="" element={<Master />}>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/add-product" element={<AddProductForm />}></Route>
+        <Route path="/img" element={<ImageForm />}></Route>
       </Route>
     </Routes>
   );
