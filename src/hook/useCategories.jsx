@@ -9,7 +9,7 @@ const useCategories = () => {
   const getCategory = async () => {
     await getCategories().then((res) => {
       const response = res.data;
-      const transformedCategories = response.map((item) => ({
+      const transformedCategories = response?.map((item) => ({
         value: item.categoryId,
         label: item.category,
       }));

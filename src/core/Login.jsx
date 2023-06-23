@@ -83,6 +83,7 @@ const Login = () => {
   };
 
   const handleSubmit = (values) => {
+    console.log(values);
     checkLoginData(values);
     getCustomer;
   };

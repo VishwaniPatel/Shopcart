@@ -9,7 +9,7 @@ const useSubCategories = () => {
   const getSubCategory = async () => {
     await getSubCategories().then((res) => {
       const response = res.data;
-      const transformedSubCategories = response.map((item) => ({
+      const transformedSubCategories = response?.map((item) => ({
         id: item.categoryId,
         value: item.subCategoryId,
         label: item.subcategory,
