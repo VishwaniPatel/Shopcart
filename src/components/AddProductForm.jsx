@@ -20,7 +20,7 @@ const AddProductForm = () => {
   const [productImages, setProductImages] = useState([]);
 
   const initialValues = {
-    productName: "Book",
+    productName: "",
     categoryId: "0",
     subCategoryId: "0",
     productPrice: "",
@@ -67,6 +67,7 @@ const AddProductForm = () => {
         const fileName = file.name; // Get the file name
         const updatedImages = [...productImages];
         updatedImages[index] = {
+          id: Math.random(),
           imageName: images,
           inputImage: base64Image,
         };
@@ -227,7 +228,6 @@ const AddProductForm = () => {
                                   <TextInput
                                     {...field}
                                     type="text"
-                                    value={value}
                                     label="Image Name"
                                     placeholder="Enter Image Name"
                                     onChange={imageNameChangeHandler}

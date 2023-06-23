@@ -12,6 +12,7 @@ const useCategories = () => {
       const transformedCategories = response?.map((item) => ({
         value: item.categoryId,
         label: item.category,
+        background: item.categoryBackground,
       }));
       setCategories(transformedCategories);
     });

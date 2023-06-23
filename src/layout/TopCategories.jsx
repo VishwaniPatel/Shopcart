@@ -1,45 +1,11 @@
 import React from "react";
-import { ImageCard } from "../shared/CategoryCard";
+import { CategoryCard } from "../shared/CategoryCard";
 import { Container, Grid, Text } from "@mantine/core";
-import furniture from "../assets/images/furniture.png";
-import bags from "../assets/images/bags.png";
-import books from "../assets/images/books.png";
-import tech from "../assets/images/tech.png";
-import sneakers from "../assets/images/sneakers.png";
-import travel from "../assets/images/travel.png";
+import useCategories from "../hook/useCategories";
+import { Link } from "react-router-dom";
 const TopCategories = () => {
-  const categories = [
-    {
-      id: 1,
-      category: "Furniture",
-      backgroundImg: furniture,
-    },
-    {
-      id: 2,
-      category: "Hand Bag",
-      backgroundImg: bags,
-    },
-    {
-      id: 3,
-      category: "Books",
-      backgroundImg: books,
-    },
-    {
-      id: 4,
-      category: "Tech",
-      backgroundImg: tech,
-    },
-    {
-      id: 5,
-      category: "Sneakers",
-      backgroundImg: sneakers,
-    },
-    {
-      id: 6,
-      category: "Travel",
-      backgroundImg: travel,
-    },
-  ];
+  const categories = useCategories();
+  console.log("categories", categories);
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>
@@ -49,7 +15,9 @@ const TopCategories = () => {
         {categories.map((data, index) => {
           return (
             <Grid.Col lg={2} md={4} key={index}>
-              <ImageCard cardData={data} />
+              <Link to={"/category/" + data.value} key={data.value}>
+                <CategoryCard key={data.value} cardData={data} />
+              </Link>
             </Grid.Col>
           );
         })}

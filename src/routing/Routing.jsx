@@ -6,6 +6,8 @@ import Home from "../pages/Home";
 import AddProductForm from "../components/AddProductForm";
 import Master from "../core/Master";
 import ImageForm from "../components/AddImage";
+import ProductPage from "../components/ProductPage";
+import CategoryPage from "../components/CategoryPage";
 const Routing = () => {
   return (
     <Routes>
@@ -14,7 +16,11 @@ const Routing = () => {
       <Route path="" element={<Master />}>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/add-product" element={<AddProductForm />}></Route>
-        <Route path="/img" element={<ImageForm />}></Route>
+        <Route
+          path="/product-detail/:productId"
+          element={<ProductPage />}
+        ></Route>
+        <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
       </Route>
     </Routes>
   );
