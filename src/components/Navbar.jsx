@@ -1,12 +1,32 @@
-import { NavLink, Text } from "@mantine/core";
+import { NavLink, Text, Menu, Button } from "@mantine/core";
 import React from "react";
-
+import useCategories from "../hook/useCategories";
+import { Link } from "react-router-dom";
 const Navbar = () => {
+  const categories = useCategories();
+  const menuCategories = categories.map((data) => (
+    <Link to={"/category/" + data.value} key={data.value}>
+      <Menu.Item key={data.value} cardData={data}>
+        {data.label}
+      </Menu.Item>
+    </Link>
+  ));
   return (
     <>
-      <Text pr={20} fw={500}>
-        Category
-      </Text>
+      <Menu
+        shadow="md"
+        width={200}
+        trigger="hover"
+        transitionProps={{ exitDuration: 0 }}
+        withinPortal
+      >
+        <Menu.Target>
+          <Text pr={20} fw={500}>
+            Categories
+          </Text>
+        </Menu.Target>
+        <Menu.Dropdown>{menuCategories}</Menu.Dropdown>
+      </Menu>
 
       <Text pr={20} fw={500}>
         Deals

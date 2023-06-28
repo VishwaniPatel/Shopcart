@@ -5,7 +5,6 @@ import useCategories from "../hook/useCategories";
 import { Link } from "react-router-dom";
 const TopCategories = () => {
   const categories = useCategories();
-  console.log("categories", categories);
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>

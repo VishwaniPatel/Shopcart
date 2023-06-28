@@ -1,8 +1,9 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Breadcrumb from "./Breadcrumbs";
-import { Container } from "@mantine/core";
+import { Container, SimpleGrid } from "@mantine/core";
 import useProducts from "../hook/useProducts";
+import ProductCard from "../shared/ProductCard";
 const CategoryPage = () => {
   const { categoryId } = useParams();
   const products = useProducts();
@@ -10,9 +11,17 @@ const CategoryPage = () => {
     return res.categoryId == categoryId;
   });
   console.log(categoryProducts);
+  const product = categoryProducts.map((item, index) => (
+    <Link to={"/product-detail/" + item.id} key={item.id}>
+      <ProductCard product={item} />
+    </Link>
+  ));
   return (
     <Container size="xl">
       <Breadcrumb />
+      <SimpleGrid cols={4} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+        {product}
+      </SimpleGrid>
     </Container>
   );
 };

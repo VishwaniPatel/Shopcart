@@ -52,7 +52,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function CategoryCard({ cardData }) {
+export function CategoryCard({ carddata }) {
   const { classes, theme } = useStyles();
 
   return (
@@ -60,13 +60,13 @@ export function CategoryCard({ cardData }) {
       <Card p="lg" shadow="lg" className={classes.card} radius="md">
         <div
           className={classes.image}
-          style={{ backgroundImage: `url(${cardData.background})` }}
+          style={{ backgroundImage: `url(${carddata?.background})` }}
         />
 
         <div className={classes.content}>
           <div>
             <Text size="lg" className={classes.title} weight={500}>
-              {cardData.label}
+              {carddata?.label}
             </Text>
           </div>
         </div>

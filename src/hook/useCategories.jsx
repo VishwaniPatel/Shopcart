@@ -17,7 +17,6 @@ const useCategories = () => {
       setCategories(transformedCategories);
     });
   };
-  console.log(categories);
   return categories;
 };
 

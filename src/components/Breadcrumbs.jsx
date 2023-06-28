@@ -13,7 +13,9 @@ const items = [
 function Breadcrumb() {
   return (
     <>
-      <Breadcrumbs>{items}</Breadcrumbs>
+      <Breadcrumbs mt={25} mb={25}>
+        {items}
+      </Breadcrumbs>
     </>
   );
 }

@@ -22,5 +22,6 @@ export const getSubCategories = async () => {
 
 // to get product details by id
 export const getProductById = async (id) => {
-  return await axios.get();
+  const url = baseUrl + "products/" + id;
+  return await axios.get(url);
 };

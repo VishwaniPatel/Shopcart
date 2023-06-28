@@ -13,6 +13,7 @@ import Logo from "../logo/Logo";
 import Navbar from "../components/Navbar";
 import SearchInput from "../components/SearchInput";
 import { IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -108,7 +109,9 @@ export function HeaderSection() {
   return (
     <Header height={80}>
       <Container size="xl" className={classes.header}>
-        <Logo />
+        <Link to={"/home"}>
+          <Logo />
+        </Link>
         <Group spacing={5} className={classes.links}>
           <Navbar />
         </Group>
