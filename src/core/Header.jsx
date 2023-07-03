@@ -7,6 +7,7 @@ import {
   Burger,
   rem,
   Text,
+  Flex,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Logo from "../logo/Logo";
@@ -119,8 +120,12 @@ export function HeaderSection() {
         <Group>
           <IconUser />
           <Text>Account</Text>
-          <IconShoppingCartPlus />
-          <Text>Cart</Text>
+          <Link to={"/cart"}>
+            <Flex>
+              <IconShoppingCartPlus />
+              <Text>Cart</Text>
+            </Flex>
+          </Link>
         </Group>
         <Burger
           opened={opened}

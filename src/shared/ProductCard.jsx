@@ -2,7 +2,6 @@ import { Card, Group, Image, Text } from "@mantine/core";
 import React from "react";
 
 const ProductCard = ({ product }) => {
-  console.log(product);
   return (
     <Card>
       <Card.Section>

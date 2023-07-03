@@ -15,7 +15,7 @@ const TopCategories = () => {
           return (
             <Grid.Col lg={2} md={4} key={index}>
               <Link to={"/category/" + data.value} key={data.value}>
-                <CategoryCard key={data.value} cardData={data} />
+                <CategoryCard key={data.value} carddata={data} />
               </Link>
             </Grid.Col>
           );

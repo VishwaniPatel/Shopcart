@@ -8,6 +8,7 @@ import Master from "../core/Master";
 import ImageForm from "../components/AddImage";
 import ProductPage from "../components/ProductPage";
 import CategoryPage from "../components/CategoryPage";
+import CartData from "../components/CartData";
 const Routing = () => {
   return (
     <Routes>
@@ -21,6 +22,7 @@ const Routing = () => {
           element={<ProductPage />}
         ></Route>
         <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
+        <Route path="/cart" element={<CartData />}></Route>
       </Route>
     </Routes>
   );

@@ -64,14 +64,13 @@ const Login = () => {
   const checkLoginData = (loginData) => {
     const email = loginData.email;
     const password = loginData.password;
-    console.log(loginData);
-    const matchedUser = Object.values(registeredData).find(
-      console.log(registeredData),
-      (user) => user.email === email && user.password === password
+    const matchedUser = registeredData.find(
+      (user) => user.customerEmail == email && user.customerPassword == password
     );
-
+    console.log(matchedUser);
     if (matchedUser) {
       localStorage.setItem("isAuthenticated", true);
+      localStorage.setItem("customerId", matchedUser.id);
       setAuthState((prevState) => ({
         ...prevState,
         isAuthenticated: true,
@@ -83,15 +82,13 @@ const Login = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
     checkLoginData(values);
-    getCustomer;
+    getCustomer();
   };
 
   const getCustomer = async () => {
     await getCustomerData().then((res) => {
       setRegisteredData(res.data);
-      console.log(registeredData);
     });
   };
   useEffect(() => {

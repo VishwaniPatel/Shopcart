@@ -6,7 +6,7 @@ const Navbar = () => {
   const categories = useCategories();
   const menuCategories = categories.map((data) => (
     <Link to={"/category/" + data.value} key={data.value}>
-      <Menu.Item key={data.value} cardData={data}>
+      <Menu.Item key={data.value} carddata={data}>
         {data.label}
       </Menu.Item>
     </Link>
