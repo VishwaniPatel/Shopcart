@@ -1,3 +1,7 @@
+:root {
+  --mantine-color-primary: #033d2a;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

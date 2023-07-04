@@ -1,54 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { getCartProducts } from "../service/ProductDataService";
-import { Table, Text, Flex, Container, Space, Image } from "@mantine/core";
+import React, { useEffect, useState, useContext } from "react";
+import { deleteCartProduct, getCartProducts } from "../service/ProductDataService";
+import { Table, Text, Flex, Container, Space, Image, Group } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
-
+import CartContext from "./CartContext";
+import useCartData from "../hook/useCart";
+import CartItem from "./CartItem";
 const CartData = () => {
-  const getItems = async () => {
-    const id = localStorage.getItem("customerId");
-    await getCartProducts(id).then((res) => {
-      const response = res.data.cart;
-      console.log(response);
-      setCartItems(response);
-    });
-  };
-  const [cartItems, setCartItems] = useState([]);
-  console.log(cartItems);
+  const { cartItems, setCartItems } = useContext(CartContext);
+  const getCartData = useCartData();
+  const [cartData, setCartData] = useState([]);
+  const [total, setTotal] = useState(0);  
   useEffect(() => {
-    getItems();
-  }, []);
+    setCartData(cartItems);
+  }, [cartItems]);
 
-  const rows = cartItems.map((data, index) => (
-    <tr key={data.id}>
-      <td>{index + 1}</td>
-      <td>{data.name}</td>
-      <td>{data.price}</td>
-      <td>{data.quantity}</td>
-      <td>
-        <Image
-          maw={100}
-          mx="auto"
-          radius="md"
-          src={data.image}
-          alt="Product image"
-        />
-      </td>
-      <td>{data.price * data.quantity}</td>
-      <td>
-        <IconTrash />
-      </td>
-    </tr>
-  ));
+  useEffect(() => {
+    setCartItems(getCartData);
+  }, [getCartData]);
+
+
+  useEffect(() => {
+    totalAmountHandler();
+  }, [cartData]);
+
+  const totalAmountHandler = () => {
+    if (cartData) {
+      setTotal(
+        cartData.reduce(
+          (total, item) => (total += parseInt(item.totalPrice)),
+          0
+        )
+      );
+    }
+  };
+  const updateTotalPrice = (updatedPrice) => {
+    setTotal(total + parseInt(updatedPrice));
+  };
+  const deleteProductHandler = async (custId, deleteItemId) => {
+    if (deleteItemId) {
+      await deleteCartProduct(custId, deleteItemId);
+      setCartItems((prevData) => prevData.filter((item) => item.id !== deleteItemId))
+    }
+  }
+
   return (
     <Container>
       <Text weight={700} size={30}>
         My cart
       </Text>
       <Space h="md"></Space>
+      {(cartItems.length < 1) ? <Text>Your Cart is Empty</Text> : 
       <Table>
-        <thead>
+         <thead>
           <tr>
-            <th>Sr. No.</th>
             <th>Product Name</th>
             <th>Product Price</th>
             <th>Product Quantity</th>
@@ -57,8 +61,20 @@ const CartData = () => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>{rows}</tbody>
+        <tbody>
+
+        {cartData.map((data) => {
+        return (
+          <CartItem key={data.id} cartData={...data} updateTotalPrice={updateTotalPrice} onDeleteProduct={deleteProductHandler} />
+        );
+      })}
+          
+         </tbody>
+      
       </Table>
+      }
+      <Text fz="xl" fw={700} ta="right">Total Amount: {total}</Text>
+    
     </Container>
   );
 };

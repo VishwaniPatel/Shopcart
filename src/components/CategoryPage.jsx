@@ -10,7 +10,6 @@ const CategoryPage = () => {
   const categoryProducts = products.filter((res) => {
     return res.categoryId == categoryId;
   });
-  console.log(categoryProducts);
   const product = categoryProducts.map((item, index) => (
     <Link to={"/product-detail/" + item.id} key={item.id}>
       <ProductCard product={item} />

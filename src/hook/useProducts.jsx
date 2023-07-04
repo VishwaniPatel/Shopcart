@@ -12,7 +12,6 @@ const useProducts = () => {
       setProducts(response);
     });
   };
-  console.log(products);
   return products;
 };
 

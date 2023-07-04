@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   createStyles,
   Header,
@@ -8,6 +8,7 @@ import {
   rem,
   Text,
   Flex,
+  Indicator,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Logo from "../logo/Logo";
@@ -15,7 +16,7 @@ import Navbar from "../components/Navbar";
 import SearchInput from "../components/SearchInput";
 import { IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-
+import CartContext from "../components/CartContext";
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
@@ -90,7 +91,8 @@ export function HeaderSection() {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
-
+  const { cartItems } = useContext(CartContext);
+  const cartDataLength = cartItems.length;
   const items = links.map((link) => (
     <a
       key={link.label}
@@ -122,8 +124,10 @@ export function HeaderSection() {
           <Text>Account</Text>
           <Link to={"/cart"}>
             <Flex>
-              <IconShoppingCartPlus />
-              <Text>Cart</Text>
+              <Indicator size={20} label={cartDataLength}>
+                <IconShoppingCartPlus />
+              </Indicator>
+              <Text ml={20}>Cart</Text>
             </Flex>
           </Link>
         </Group>

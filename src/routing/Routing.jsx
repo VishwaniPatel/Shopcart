@@ -15,6 +15,7 @@ const Routing = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/registration" element={<Registration />}></Route>
       <Route path="" element={<Master />}>
+        <Route path="" element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/add-product" element={<AddProductForm />}></Route>
         <Route

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "./Breadcrumbs";
 import {
@@ -15,15 +15,17 @@ import {
   Button,
   Paper,
   Box,
+  Notification,
 } from "@mantine/core";
 import { addCartProducts, getProductById } from "../service/ProductDataService";
 import {
+  IconCheck,
   IconMinus,
   IconPlus,
   IconTruck,
   IconTruckReturn,
 } from "@tabler/icons-react";
-import useCart from "../hook/useCart";
+import CartContext from "./CartContext";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -38,7 +40,7 @@ const ProductPage = () => {
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const { items, totalAmount, addItemToCart, removeItemFromCart } = useCart();
+  const { cartItems, setCartItems } = useContext(CartContext);
   const getProduct = async () => {
     await getProductById(productId).then((res) => {
       const response = res.data;
@@ -96,10 +98,12 @@ const ProductPage = () => {
       price: product.productPrice,
       quantity: quantity,
       image: product.productImage[0].inputImage,
+      totalPrice: product.productPrice * quantity,
     };
     const custId = localStorage.getItem("customerId");
     // Add the item to the cart
     addCartProducts(custId, item);
+    setCartItems((prevItems) => [...prevItems, item]);
   };
   return (
     <Container size="xl">

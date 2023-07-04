@@ -73,7 +73,6 @@ const useStyles = createStyles((theme) => ({
     paddingRight: rem(50),
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: rem(22),
-
     [theme.fn.smallerThan("md")]: {
       width: "100%",
     },
@@ -96,13 +95,7 @@ export function HeroImageRight() {
                 Shopping is a bit of a relaxing hobby for me, which is sometimes
                 troubling for the bank balance.
               </Text>
-              <Button
-                radius="xl"
-                size="xl"
-                color="#2B8A3E"
-                className={classes.control}
-                mt={40}
-              >
+              <Button radius="xl" size="xl" className={classes.control} mt={40}>
                 Learn More
               </Button>
             </div>

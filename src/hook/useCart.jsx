@@ -1,87 +1,22 @@
-import { useReducer } from "react";
-import { addCartProducts } from "../service/ProductDataService";
+import React, { useEffect, useState } from "react";
+import { getCartProducts } from "../service/ProductDataService";
 
-const defaultCartState = {
-  items: [],
-  totalAmount: 0,
-};
+const useCartData = () => {
+  const [cartProducts, setCartProducts] = useState([]);
 
-const cartReducer = (state, action) => {
-  if (action.type === "ADD") {
-    const updatedTotalAmount =
-      state.totalAmount + action.item.price * action.item.amount;
-
-    const existingCartItemIndex = state.items.findIndex(
-      (item) => item.id === action.item.id
-    );
-    const existingCartItem = state.items[existingCartItemIndex];
-    let updatedItems;
-
-    if (existingCartItem) {
-      const updatedItem = {
-        ...existingCartItem,
-        amount: existingCartItem.amount + action.item.amount,
-      };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
-    } else {
-      updatedItems = state.items.concat(action.item);
-    }
-
-    return {
-      items: updatedItems,
-      totalAmount: updatedTotalAmount,
-    };
-  }
-  if (action.type === "REMOVE") {
-    const existingCartItemIndex = state.items.findIndex(
-      (item) => item.id === action.id
-    );
-    const existingItem = state.items[existingCartItemIndex];
-    const updatedTotalAmount = state.totalAmount - existingItem.price;
-    let updatedItems;
-    if (existingItem.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
-    }
-
-    return {
-      items: updatedItems,
-      totalAmount: updatedTotalAmount,
-    };
-  }
-
-  return defaultCartState;
-};
-
-const useCart = () => {
-  const [cartState, dispatchCartAction] = useReducer(
-    cartReducer,
-    defaultCartState
-  );
-
-  const addItemToCart = async (item) => {
-    try {
-      await addCartProducts(item); // Call the addCartProducts service with the item
-      dispatchCartAction({ type: "ADD", item: item });
-    } catch (error) {
-      // Handle the error, such as displaying an error message or logging the error.
-    }
+  const getItems = async () => {
+    const id = localStorage.getItem("customerId");
+    await getCartProducts(id).then((res) => {
+      const response = res.data.cart;
+      setCartProducts(response);
+    });
   };
 
-  const removeItemFromCart = (id) => {
-    dispatchCartAction({ type: "REMOVE", id: id });
-  };
+  useEffect(() => {
+    getItems();
+  }, []);
 
-  return {
-    items: cartState.items,
-    totalAmount: cartState.totalAmount,
-    addItemToCart,
-    removeItemFromCart,
-  };
+  return cartProducts;
 };
 
-export default useCart;
+export default useCartData;

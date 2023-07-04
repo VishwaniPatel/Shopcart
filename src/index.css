@@ -1,3 +1,6 @@
+:root {
+  --mantine-color-primary: #033d2a;
+}
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,4 +29,3 @@ html {
   a{
     all: unset;
   }
- 
