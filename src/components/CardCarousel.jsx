@@ -10,6 +10,7 @@ import {
 import ProductCard from "../shared/ProductCard";
 import useProducts from "../hook/useProducts";
 import { useState, useEffect } from "react";
+import useCategories from "../hook/useCategories";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -40,19 +41,41 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function CardsCarousel() {
+  const categories = useCategories();
   const product = useProducts();
-  const [products, setProducts] = useState(product);
+  const [productsToBeDisplay, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  const slides = products.map((item, index) => (
-    <Carousel.Slide key={index}>
-      <ProductCard product={item} />
-    </Carousel.Slide>
-  ));
+
+  // get last added product from add categories
+  const getProductData = (categories, products) => {
+    const lastAddedProducts = categories.map((category) => {
+      const productsInCategory = products.filter(
+        (product) => product.categoryId === category.value
+      );
+      const sortedProducts = productsInCategory.sort((a, b) => b.id - a.id);
+
+      const lastProduct = sortedProducts[0];
+      return lastProduct;
+    });
+    return lastAddedProducts;
+  };
+
+  // display product card for all categories
+  const slides =
+    productsToBeDisplay &&
+    productsToBeDisplay.map((item) => (
+      <Carousel.Slide key={item?.id}>
+        <ProductCard product={item} />
+      </Carousel.Slide>
+    ));
+
   useEffect(() => {
-    setProducts(product);
-  }, [product]);
+    const products = getProductData(categories, product);
+    setProducts(products);
+  }, [product, categories]);
+
   useEffect(() => {
     // Simulating fetching data from the database
     setTimeout(() => {
@@ -63,7 +86,7 @@ export function CardsCarousel() {
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>
-        Todays Best Deals For You!
+        Latest Products For You!
       </Text>
       <Carousel
         slideSize="50%"

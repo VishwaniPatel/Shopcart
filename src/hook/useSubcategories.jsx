@@ -6,6 +6,7 @@ const useSubCategories = () => {
   useEffect(() => {
     getSubCategory();
   }, []);
+  // get all subcategories from database perform map to use in multiple components
   const getSubCategory = async () => {
     await getSubCategories().then((res) => {
       const response = res.data;

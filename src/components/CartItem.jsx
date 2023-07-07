@@ -1,35 +1,51 @@
 import { ActionIcon, Button, Flex, Image, Table } from "@mantine/core";
 import { IconMinus, IconPlus, IconTrash } from "@tabler/icons-react";
-import React, { useState } from "react";
+import React, { useState, useReducer, useContext } from "react";
 import {
   deleteCartProduct,
   updateCartProduct,
 } from "../service/ProductDataService";
+import CartContext from "./CartContext";
+
+// reducer function to increment and decrement product quantity
+const quantityReducer = (state, action) => {
+  switch (action.type) {
+    case "increase":
+      return { quantity: state.quantity + 1 };
+    case "decrease":
+      return { quantity: state.quantity - 1 };
+    default:
+      return state;
+  }
+};
+
 const CartItem = ({ cartData, updateTotalPrice, onDeleteProduct }) => {
   const [cart, setCart] = useState({
     counter: cartData.quantity,
-    Price: cartData.price,
+    price: cartData.price,
   });
-  const removeHandler = () => {
-    if (cart.counter > 1) {
-      const updatedCounter = cart.counter - 1;
-      setCart({
-        counter: updatedCounter,
-      });
-      const id = localStorage.getItem("customerId");
-      updateCartProduct(id, cartData.id, updatedCounter);
+
+  const initialState = { quantity: 1 };
+  const [{ quantity }, dispatchQuantity] = useReducer(
+    quantityReducer,
+    initialState
+  );
+
+  // increase product quantity
+  const addHandler = () => {
+    if (quantity < product.productQuantity) {
+      dispatchQuantity({ type: "increase" });
     }
   };
 
-  const addHandler = () => {
-    const updatedCounter = cart.counter + 1;
-    setCart({
-      counter: updatedCounter,
-    });
-    const id = localStorage.getItem("customerId");
-    updateCartProduct(id, cartData.id, updatedCounter);
+  // decrease product quantity
+  const removeHandler = () => {
+    if (quantity > 1) {
+      dispatchQuantity({ type: "decrease" });
+    }
   };
 
+  // get customer id from local storage, pass cutomer id and product id using props
   const deleteCartItemHandler = async (id) => {
     const custId = localStorage.getItem("customerId");
     onDeleteProduct(custId, id);
@@ -59,7 +75,7 @@ const CartItem = ({ cartData, updateTotalPrice, onDeleteProduct }) => {
           alt="Product image"
         />
       </td>
-      <td>{cartData.totalPrice}</td>
+      <td>{cart.counter * cartData.price}</td>
       <td>
         <ActionIcon variant="outline" color="red">
           <IconTrash onClick={() => deleteCartItemHandler(cartData.id)} />

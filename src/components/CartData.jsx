@@ -1,23 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
-import { deleteCartProduct, getCartProducts } from "../service/ProductDataService";
-import { Table, Text, Flex, Container, Space, Image, Group } from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
+import { deleteCartProduct, updateCartProduct } from "../service/ProductDataService";
+import { Table, Text,  Container, Space } from "@mantine/core";
 import CartContext from "./CartContext";
-import useCartData from "../hook/useCart";
 import CartItem from "./CartItem";
 const CartData = () => {
   const { cartItems, setCartItems } = useContext(CartContext);
-  const getCartData = useCartData();
   const [cartData, setCartData] = useState([]);
   const [total, setTotal] = useState(0);  
   useEffect(() => {
     setCartData(cartItems);
   }, [cartItems]);
-
-  useEffect(() => {
-    setCartItems(getCartData);
-  }, [getCartData]);
-
 
   useEffect(() => {
     totalAmountHandler();
@@ -34,14 +26,17 @@ const CartData = () => {
     }
   };
   const updateTotalPrice = (updatedPrice) => {
-    setTotal(total + parseInt(updatedPrice));
+    setTotal(updatedPrice);
   };
+
+  // delete cart product from logged in user data for selected item
   const deleteProductHandler = async (custId, deleteItemId) => {
     if (deleteItemId) {
       await deleteCartProduct(custId, deleteItemId);
       setCartItems((prevData) => prevData.filter((item) => item.id !== deleteItemId))
     }
   }
+ 
 
   return (
     <Container>
@@ -50,6 +45,7 @@ const CartData = () => {
       </Text>
       <Space h="md"></Space>
       {(cartItems.length < 1) ? <Text>Your Cart is Empty</Text> : 
+      <>
       <Table>
          <thead>
           <tr>
@@ -72,8 +68,9 @@ const CartData = () => {
          </tbody>
       
       </Table>
-      }
       <Text fz="xl" fw={700} ta="right">Total Amount: {total}</Text>
+      </> 
+      }
     
     </Container>
   );

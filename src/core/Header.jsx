@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   createStyles,
   Header,
@@ -17,12 +17,16 @@ import SearchInput from "../components/SearchInput";
 import { IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import CartContext from "../components/CartContext";
+import useCartData from "../hook/useCart";
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     height: "100%",
+  },
+  cursorPointer: {
+    cursor: "pointer",
   },
 
   links: {
@@ -89,26 +93,17 @@ const links = [
 ];
 export function HeaderSection() {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
-  const { cartItems } = useContext(CartContext);
-  const cartDataLength = cartItems.length;
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={cx(classes.link, {
-        [classes.linkActive]: active === link.link,
-      })}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-      }}
-    >
-      {link.label}
-    </a>
-  ));
+  const { cartItems, setCartItems } = useContext(CartContext);
+  const getCartData = useCartData();
+  const [cartDataLength, setCartDataLength] = useState(0);
 
+  useEffect(() => {
+    setCartDataLength(cartItems.length);
+  }, [cartItems]);
+  useEffect(() => {
+    setCartItems(getCartData);
+  }, [getCartData]);
   return (
     <Header height={80}>
       <Container size="xl" className={classes.header}>
@@ -124,7 +119,11 @@ export function HeaderSection() {
           <Text>Account</Text>
           <Link to={"/cart"}>
             <Flex>
-              <Indicator size={20} label={cartDataLength}>
+              <Indicator
+                size={20}
+                label={cartDataLength}
+                className={classes.cursorPointer}
+              >
                 <IconShoppingCartPlus />
               </Indicator>
               <Text ml={20}>Cart</Text>

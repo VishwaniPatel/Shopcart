@@ -3,7 +3,6 @@ import CartContext from "./CartContext";
 
 const ContextProvider = (props) => {
   const [cartItems, setCartItems] = useState([]);
-
   const contextValue = {
     cartItems,
     setCartItems,

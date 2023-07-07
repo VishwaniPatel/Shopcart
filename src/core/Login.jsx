@@ -61,6 +61,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [registeredData, setRegisteredData] = useState([]);
 
+  // match user entered data with registered data
   const checkLoginData = (loginData) => {
     const email = loginData.email;
     const password = loginData.password;
@@ -81,11 +82,13 @@ const Login = () => {
     }
   };
 
+  // get value of entered data
   const handleSubmit = (values) => {
     checkLoginData(values);
     getCustomer();
   };
 
+  // get registered user data to perform match
   const getCustomer = async () => {
     await getCustomerData().then((res) => {
       setRegisteredData(res.data);

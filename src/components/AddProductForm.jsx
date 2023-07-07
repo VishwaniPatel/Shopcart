@@ -11,7 +11,7 @@ const AddProductForm = () => {
   const category = useCategories();
   const subcategories = useSubCategories();
   const [subCategories, setSubCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+
   const [value, setValue] = useState();
   const [subValue, setSubValue] = useState();
   const [images, setImages] = useState("");
@@ -31,11 +31,13 @@ const AddProductForm = () => {
     offerPrice: "",
     productImage: [
       {
-        imageName: "", // Add a default value here
+        imageName: "",
         inputImage: "",
       },
     ],
   };
+
+  // set value to product category selected by user, also filter subcategories for selected category
   const handleCategoryChange = (value) => {
     setValue(value);
     const subCategoryOptions = subcategories.filter(
@@ -44,20 +46,26 @@ const AddProductForm = () => {
     setSubCategories(subCategoryOptions);
     setSubValue("");
   };
+
+  // set value to product subcategory selected by user
   const handleSubCategoryChange = (value) => {
     setSubValue(value);
   };
+
+  // enable fields to adding image details
   const handleAddImage = () => {
     setIsAddingImage(true);
     setProductImages([...productImages, { imageName: "", inputImage: "" }]);
   };
 
+  // remove image data on button click
   const handleRemoveImage = (index) => {
     const updatedImages = [...productImages];
     updatedImages.splice(index, 1);
     setProductImages(updatedImages);
   };
 
+  // add product image with image name and image value
   const handleImageChange = (index, event) => {
     const file = event;
     if (file) {
@@ -78,6 +86,8 @@ const AddProductForm = () => {
       console.log("No file selected");
     }
   };
+
+  // after adding image details confirm action to store in database
   const handleConfirmAdd = (index) => {
     const updatedImages = [...productImages];
     console.log(updatedImages);
@@ -91,12 +101,14 @@ const AddProductForm = () => {
     const imageName = event.target.value;
     setImages(imageName);
   };
+
+  // submit form values
   const handleSubmit = (values) => {
     const data = {
       ...values,
       productImage: productImages,
     };
-    console.log(data);
+
     addProductData(data);
   };
 

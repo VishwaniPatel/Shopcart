@@ -1,6 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
-import Breadcrumb from "./Breadcrumbs";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useReducer,
+} from "react";
+import { Link, useParams } from "react-router-dom";
+import BreadcrumbsUI from "./Breadcrumbs";
 import {
   Container,
   Grid,
@@ -19,7 +25,6 @@ import {
 } from "@mantine/core";
 import { addCartProducts, getProductById } from "../service/ProductDataService";
 import {
-  IconCheck,
   IconMinus,
   IconPlus,
   IconTruck,
@@ -33,14 +38,31 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+// reducer function to increase and decrease product quantity
+const quantityReducer = (state, action) => {
+  switch (action.type) {
+    case "increase":
+      return { quantity: state.quantity + 1 };
+    case "decrease":
+      return { quantity: state.quantity - 1 };
+    default:
+      return state;
+  }
+};
 const ProductPage = () => {
   const { classes } = useStyles();
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const initialState = { quantity: 1 };
+  const [{ quantity }, dispatchQuantity] = useReducer(
+    quantityReducer,
+    initialState
+  );
+  const { setCartItems } = useContext(CartContext);
+
+  // Get product details using service by product id
   const getProduct = async () => {
     await getProductById(productId).then((res) => {
       const response = res.data;
@@ -67,29 +89,33 @@ const ProductPage = () => {
       </>
     );
   }
+
+  // Set id for image preview
   const setImage = (id) => {
     if (id == 1) {
       setIndex(1);
     }
     if (id == 2) {
       setIndex(2);
-      console.log("Second Image");
     }
     if (id == 3) {
       setIndex(3);
     }
   };
+  // On click on button increase product quantity
   const handleIncreaseQuantity = () => {
     if (quantity < product.productQuantity) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
+      dispatchQuantity({ type: "increase" });
+    }
+  };
+  // On click on button decrease product quantity
+  const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+      dispatchQuantity({ type: "decrease" });
     }
   };
 
-  const handleDecreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+  // On click of add to cart button this function executes
   const handleAddToCart = () => {
     // Create an item object with the necessary information
     const item = {
@@ -107,7 +133,7 @@ const ProductPage = () => {
   };
   return (
     <Container size="xl">
-      <Breadcrumb />
+      <BreadcrumbsUI></BreadcrumbsUI>
       <Grid gutter={50}>
         <Grid.Col span={6}>
           <Image
@@ -227,9 +253,11 @@ const ProductPage = () => {
                 <Button mr={16} color="teal">
                   Buy Now
                 </Button>
-                <Button variant="outline" onClick={handleAddToCart}>
-                  Add to Cart
-                </Button>
+                <Link to="/cart">
+                  <Button variant="outline" onClick={handleAddToCart}>
+                    Add to Cart
+                  </Button>
+                </Link>
               </Group>
               <Group>
                 <Flex direction={"column"} w={400}>

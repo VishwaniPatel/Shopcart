@@ -6,6 +6,8 @@ const useCategories = () => {
   useEffect(() => {
     getCategory();
   }, []);
+
+  // get all categories from database perform map to use in multiple components
   const getCategory = async () => {
     await getCategories().then((res) => {
       const response = res.data;

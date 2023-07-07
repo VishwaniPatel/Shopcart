@@ -4,6 +4,7 @@ import { getCartProducts } from "../service/ProductDataService";
 const useCartData = () => {
   const [cartProducts, setCartProducts] = useState([]);
 
+  // get cart data for logged in user
   const getItems = async () => {
     const id = localStorage.getItem("customerId");
     await getCartProducts(id).then((res) => {

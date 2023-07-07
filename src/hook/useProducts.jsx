@@ -6,6 +6,8 @@ const useProducts = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
+  // get all products data for all categories
   const getProducts = async () => {
     await getProductData().then((res) => {
       const response = res.data;
