@@ -11,7 +11,6 @@ const AddProductForm = () => {
   const category = useCategories();
   const subcategories = useSubCategories();
   const [subCategories, setSubCategories] = useState([]);
-
   const [value, setValue] = useState();
   const [subValue, setSubValue] = useState();
   const [images, setImages] = useState("");
@@ -90,7 +89,6 @@ const AddProductForm = () => {
   // after adding image details confirm action to store in database
   const handleConfirmAdd = (index) => {
     const updatedImages = [...productImages];
-    console.log(updatedImages);
     console.log(updatedImages);
     updatedImages[index].confirmAdd = true;
     setProductImages(updatedImages);

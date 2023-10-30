@@ -29,7 +29,7 @@ const BreadcrumbsUI = () => {
         // if path contains category than label should be displayed as Category Name
         if (path === "category") {
           const category = categories.find(
-            (category) => category.value === categoryId
+            (category) => category.value == categoryId
           );
           if (category) {
             return {
@@ -41,7 +41,7 @@ const BreadcrumbsUI = () => {
         // if path contains product detail than label should be displayed as Category Name as well as product name
         if (path === "product-detail") {
           const category = categories.find(
-            (category) => category.value === categoryId
+            (category) => category.value == categoryId
           );
           const product = products.find((product) => product.id == productId);
           if (category && product) {

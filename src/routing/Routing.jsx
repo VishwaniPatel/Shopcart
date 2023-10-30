@@ -8,6 +8,8 @@ import Master from "../core/Master";
 import ProductPage from "../components/ProductPage";
 import CategoryPage from "../components/CategoryPage";
 import CartData from "../components/CartData";
+import ManageCategoryPage from "../components/ManageCategoryPage";
+import AddSubCategoryPage from "../components/AddSubCategory";
 const Routing = () => {
   return (
     <Routes>
@@ -24,6 +26,8 @@ const Routing = () => {
         />
         <Route path="/cart" element={<CartData />}></Route>
       </Route>
+      <Route path="/manage-category" element={<ManageCategoryPage />}></Route>
+      <Route path="/add-subcategory" element={<AddSubCategoryPage />}></Route>
     </Routes>
   );
 };

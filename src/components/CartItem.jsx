@@ -8,32 +8,48 @@ import {
 import CartContext from "./CartContext";
 
 // reducer function to increment and decrement product quantity
+// reducer function to update quantity and cart state
 const quantityReducer = (state, action) => {
   switch (action.type) {
     case "increase":
-      return { quantity: state.quantity + 1 };
+      return {
+        ...state,
+        quantity: state.quantity + 1,
+        cart: {
+          ...state.cart,
+          counter: state.cart.counter + 1,
+        },
+      };
     case "decrease":
-      return { quantity: state.quantity - 1 };
+      return {
+        ...state,
+        quantity: state.quantity - 1,
+        cart: {
+          ...state.cart,
+          counter: state.cart.counter - 1,
+        },
+      };
     default:
       return state;
   }
 };
 
 const CartItem = ({ cartData, updateTotalPrice, onDeleteProduct }) => {
-  const [cart, setCart] = useState({
-    counter: cartData.quantity,
-    price: cartData.price,
-  });
+  const initialState = {
+    quantity: 1,
+    cart: {
+      counter: cartData.quantity,
+      price: cartData.price,
+    },
+  };
 
-  const initialState = { quantity: 1 };
-  const [{ quantity }, dispatchQuantity] = useReducer(
+  const [{ quantity, cart }, dispatchQuantity] = useReducer(
     quantityReducer,
     initialState
   );
-
   // increase product quantity
   const addHandler = () => {
-    if (quantity < product.productQuantity) {
+    if (quantity < cart.counter) {
       dispatchQuantity({ type: "increase" });
     }
   };

@@ -12,7 +12,7 @@ const useCategories = () => {
     await getCategories().then((res) => {
       const response = res.data;
       const transformedCategories = response?.map((item) => ({
-        value: item.categoryId,
+        value: item.id,
         label: item.category,
         background: item.categoryBackground,
       }));

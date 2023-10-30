@@ -6,6 +6,7 @@ import {
   rem,
   Container,
   Text,
+  Skeleton,
 } from "@mantine/core";
 import ProductCard from "../shared/ProductCard";
 import useProducts from "../hook/useProducts";
@@ -43,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 export function CardsCarousel() {
   const categories = useCategories();
   const product = useProducts();
-  const [productsToBeDisplay, setProducts] = useState([]);
+  const [productsToBeDisplay, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
@@ -52,7 +53,7 @@ export function CardsCarousel() {
   const getProductData = (categories, products) => {
     const lastAddedProducts = categories.map((category) => {
       const productsInCategory = products.filter(
-        (product) => product.categoryId === category.value
+        (product) => product.categoryId == category.value
       );
       const sortedProducts = productsInCategory.sort((a, b) => b.id - a.id);
 
@@ -65,9 +66,9 @@ export function CardsCarousel() {
   // display product card for all categories
   const slides =
     productsToBeDisplay &&
-    productsToBeDisplay.map((item) => (
+    productsToBeDisplay?.map((item) => (
       <Carousel.Slide key={item?.id}>
-        <ProductCard product={item} />
+        <ProductCard product={item} key={item?.id} />
       </Carousel.Slide>
     ));
 
@@ -81,8 +82,17 @@ export function CardsCarousel() {
     setTimeout(() => {
       // Assuming `products` is fetched and available here
       setLoading(false);
-    }, 2000);
+    }, 3000);
   }, []);
+  if (loading) {
+    return (
+      <>
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+      </>
+    );
+  }
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>

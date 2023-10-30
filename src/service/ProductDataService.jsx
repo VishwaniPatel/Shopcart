@@ -1,4 +1,5 @@
 import axios from "axios";
+import { json } from "react-router-dom";
 const baseUrl = "http://localhost:3000/";
 // to get products details
 export const getProductData = async () => {
@@ -18,6 +19,17 @@ export const getCategories = async () => {
 // to get categories
 export const getSubCategories = async () => {
   return await axios.get(baseUrl + "subcategories");
+};
+
+//to add categories
+export const addCategory = async (category) => {
+  const url = baseUrl + "categories";
+  return await axios.post(url, category);
+};
+//to add sub-categories
+export const addSubCategory = async (subcategory) => {
+  const url = baseUrl + "subcategories";
+  return await axios.post(url, subcategory);
 };
 
 // to get product details by id

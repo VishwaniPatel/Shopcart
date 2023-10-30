@@ -12,8 +12,9 @@ const useSubCategories = () => {
       const response = res.data;
       const transformedSubCategories = response?.map((item) => ({
         id: item.categoryId,
-        value: item.subCategoryId,
-        label: item.subcategory,
+        value: item.id,
+        label: item.subCategory,
+        background: item.subCategoryBackground,
       }));
       setSubCategories(transformedSubCategories);
     });

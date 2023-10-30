@@ -73,24 +73,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-const links = [
-  {
-    link: "/about",
-    label: "Features",
-  },
-  {
-    link: "/pricing",
-    label: "Pricing",
-  },
-  {
-    link: "/learn",
-    label: "Learn",
-  },
-  {
-    link: "/community",
-    label: "Community",
-  },
-];
+
 export function HeaderSection() {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes, cx } = useStyles();

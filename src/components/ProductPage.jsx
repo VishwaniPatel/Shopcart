@@ -137,7 +137,7 @@ const ProductPage = () => {
       <Grid gutter={50}>
         <Grid.Col span={6}>
           <Image
-            src={product.productImage[index]?.inputImage}
+            src={product?.productImage[index]?.inputImage}
             height={500}
             alt="Product Image"
             radius="md"
