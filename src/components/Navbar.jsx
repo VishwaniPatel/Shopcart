@@ -3,9 +3,10 @@ import React from "react";
 import useCategories from "../hook/useCategories";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  const categories = useCategories();
+  const { data: categories } = useCategories();
+  console.log(categories);
   // menu that display list of categories
-  const menuCategories = categories.map((data) => (
+  const menuCategories = categories?.map((data) => (
     <Link to={"/category/" + data.value} key={data.value}>
       <Menu.Item key={data.value} carddata={data}>
         {data.label}

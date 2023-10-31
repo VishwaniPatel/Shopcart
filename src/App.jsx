@@ -3,6 +3,7 @@ import Master from "./core/Master";
 import { MantineProvider } from "@mantine/core";
 import Routing from "./routing/Routing";
 import ContextProvider from "./components/CartProvider";
+
 const App = () => {
   return (
     <ContextProvider>

@@ -13,6 +13,7 @@ export const addProductData = async (product) => {
 
 // to get categories
 export const getCategories = async () => {
+  console.log("in service");
   return await axios.get(baseUrl + "categories");
 };
 
