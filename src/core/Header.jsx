@@ -9,6 +9,7 @@ import {
   Text,
   Flex,
   Indicator,
+  Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Logo from "../logo/Logo";
@@ -18,6 +19,7 @@ import { IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import CartContext from "../components/CartContext";
 import useCartData from "../hook/useCart";
+import { useAuth0 } from "@auth0/auth0-react";
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
@@ -80,7 +82,7 @@ export function HeaderSection() {
   const { cartItems, setCartItems } = useContext(CartContext);
   const getCartData = useCartData();
   const [cartDataLength, setCartDataLength] = useState(0);
-
+  const { loginWithPopup, isAuthenticated, user } = useAuth0();
   useEffect(() => {
     setCartDataLength(cartItems.length);
   }, [cartItems]);
@@ -98,20 +100,26 @@ export function HeaderSection() {
         </Group>
         <SearchInput />
         <Group>
-          <IconUser />
-          <Text>Account</Text>
-          <Link to={"/cart"}>
-            <Flex>
-              <Indicator
-                size={20}
-                label={cartDataLength}
-                className={classes.cursorPointer}
-              >
-                <IconShoppingCartPlus />
-              </Indicator>
-              <Text ml={20}>Cart</Text>
-            </Flex>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <IconUser />
+              {user.name}
+              <Link to={"/cart"}>
+                <Flex>
+                  <Indicator
+                    size={20}
+                    label={cartDataLength}
+                    className={classes.cursorPointer}
+                  >
+                    <IconShoppingCartPlus />
+                  </Indicator>
+                  <Text ml={20}>Cart</Text>
+                </Flex>
+              </Link>
+            </>
+          ) : (
+            <Button onClick={loginWithPopup}>Sign-In</Button>
+          )}
         </Group>
         <Burger
           opened={opened}
