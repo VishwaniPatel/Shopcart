@@ -5,7 +5,7 @@ import {
   deleteCartProduct,
   updateCartProduct,
 } from "../service/ProductDataService";
-import CartContext from "./CartContext";
+import CartContext from "../context/CartContext";
 
 // reducer function to increment and decrement product quantity
 // reducer function to update quantity and cart state

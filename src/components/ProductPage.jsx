@@ -30,7 +30,7 @@ import {
   IconTruck,
   IconTruckReturn,
 } from "@tabler/icons-react";
-import CartContext from "./CartContext";
+import CartContext from "../context/CartContext";
 
 const useStyles = createStyles((theme) => ({
   img: {

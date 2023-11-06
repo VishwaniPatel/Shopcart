@@ -1,12 +1,18 @@
-import { NavLink, Text, Menu, Button } from "@mantine/core";
-import React from "react";
+import { NavLink, Text, Menu, Button, Skeleton } from "@mantine/core";
+import React, { useEffect } from "react";
 import useCategories from "../hook/useCategories";
 import { Link } from "react-router-dom";
+import { getCategories } from "../service/ProductDataService";
+import { useQuery } from "@tanstack/react-query";
 const Navbar = () => {
-  const { data: categories } = useCategories();
+  const { data: categories, isLoading } = useCategories();
   console.log(categories);
+  if (isLoading) {
+    return <Skeleton />;
+  }
   // menu that display list of categories
-  const menuCategories = categories?.map((data) => (
+  const menuCategories = categories.map((data) => (
+    // console.log(data)
     <Link to={"/category/" + data.value} key={data.value}>
       <Menu.Item key={data.value} carddata={data}>
         {data.label}

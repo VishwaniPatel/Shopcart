@@ -16,7 +16,7 @@ import Navbar from "../components/Navbar";
 import SearchInput from "../components/SearchInput";
 import { IconShoppingCartPlus, IconUser } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import CartContext from "../components/CartContext";
+import CartContext from "../context/CartContext";
 import useCartData from "../hook/useCart";
 const useStyles = createStyles((theme) => ({
   header: {

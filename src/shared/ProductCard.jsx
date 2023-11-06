@@ -1,7 +1,7 @@
 import { Button, Card, Group, Image, Text } from "@mantine/core";
 import React, { useState, useContext, useEffect } from "react";
 import { addCartProducts } from "../service/ProductDataService";
-import CartContext from "../components/CartContext";
+import CartContext from "../context/CartContext";
 import { Link } from "react-router-dom";
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);

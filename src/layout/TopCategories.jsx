@@ -1,10 +1,13 @@
 import React from "react";
 import { CategoryCard } from "../shared/CategoryCard";
-import { Container, Grid, Text } from "@mantine/core";
+import { Container, Grid, Skeleton, Text } from "@mantine/core";
 import useCategories from "../hook/useCategories";
 import { Link } from "react-router-dom";
 const TopCategories = () => {
-  const categories = useCategories();
+  const { data: categories, isLoading } = useCategories();
+  if (isLoading) {
+    return <Skeleton />;
+  }
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>

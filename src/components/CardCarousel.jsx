@@ -42,13 +42,21 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function CardsCarousel() {
-  const categories = useCategories();
+  const { data: categories, isLoading } = useCategories();
   const product = useProducts();
   const [productsToBeDisplay, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+        <Skeleton height={20} mt={6} width="100%" radius="xl" />
+      </>
+    );
+  }
   // get last added product from add categories
   const getProductData = (categories, products) => {
     const lastAddedProducts = categories.map((category) => {
@@ -75,24 +83,8 @@ export function CardsCarousel() {
   useEffect(() => {
     const products = getProductData(categories, product);
     setProducts(products);
-  }, [product, categories]);
+  }, [product]);
 
-  useEffect(() => {
-    // Simulating fetching data from the database
-    setTimeout(() => {
-      // Assuming `products` is fetched and available here
-      setLoading(false);
-    }, 3000);
-  }, []);
-  if (loading) {
-    return (
-      <>
-        <Skeleton height={20} mt={6} width="100%" radius="xl" />
-        <Skeleton height={20} mt={6} width="100%" radius="xl" />
-        <Skeleton height={20} mt={6} width="100%" radius="xl" />
-      </>
-    );
-  }
   return (
     <Container size="xl">
       <Text size={28} mt={40} mb={20} fw={700}>
