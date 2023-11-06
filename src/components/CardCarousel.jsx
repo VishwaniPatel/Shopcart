@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
 
 export function CardsCarousel() {
   const { data: categories, isLoading } = useCategories();
-  const product = useProducts();
+  const { data: product } = useProducts();
   const [productsToBeDisplay, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const theme = useMantineTheme();
@@ -83,7 +83,7 @@ export function CardsCarousel() {
   useEffect(() => {
     const products = getProductData(categories, product);
     setProducts(products);
-  }, [product]);
+  }, []);
 
   return (
     <Container size="xl">
