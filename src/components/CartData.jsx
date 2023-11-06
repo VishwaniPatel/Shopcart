@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { deleteCartProduct, updateCartProduct } from "../service/ProductDataService";
 import { Table, Text,  Container, Space } from "@mantine/core";
-import CartContext from "./CartContext";
+import CartContext from "../context/CartContext";
 import CartItem from "./CartItem";
 const CartData = () => {
   const { cartItems, setCartItems } = useContext(CartContext);

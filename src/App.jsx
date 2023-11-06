@@ -2,7 +2,8 @@ import React from "react";
 import Master from "./core/Master";
 import { MantineProvider } from "@mantine/core";
 import Routing from "./routing/Routing";
-import ContextProvider from "./components/CartProvider";
+import ContextProvider from "./context/CartProvider";
+
 const App = () => {
   return (
     <ContextProvider>

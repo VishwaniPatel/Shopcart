@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <HeroImageRight />
       <TopCategories />
-      <CardsCarousel />
+      {/* <CardsCarousel /> */}
       <OfferSection />
       <FooterLinks />
     </>
